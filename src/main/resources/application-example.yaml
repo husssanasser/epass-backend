@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: epass-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/epass_db
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8080
+
+jwt:
+  secret: epass_secret_key_2024_very_long_secret_key_123456
+  expiration: 604800000
+
+groq:
+  api:
+    key: YOUR_GROQ_API_KEY_HERE
+    url: https://api.groq.com/openai/v1/chat/completions
+  model: llama-3.3-70b-versatile
