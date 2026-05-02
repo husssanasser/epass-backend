@@ -18,8 +18,7 @@ public class QRCodeService {
     }
 
     public String generateQRCodeImage(String token) throws Exception {
-        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "https://user-retention-smashup.ngrok-free.dev");
-        String content = frontendUrl + "/verify?token=" + token;
+        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "https://epass-frontend-wine.vercel.app");        String content = frontendUrl + "/verify?token=" + token;
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(
