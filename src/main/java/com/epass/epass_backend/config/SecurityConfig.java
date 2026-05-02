@@ -73,7 +73,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "http://localhost:3001",
                 "http://192.168.1.170:3001",
-                "https://epass-frontend.vercel.app"
+                "https://epass-frontend-wine.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
