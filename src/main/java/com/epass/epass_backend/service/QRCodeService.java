@@ -18,7 +18,7 @@ public class QRCodeService {
     }
 
     public String generateQRCodeImage(String token) throws Exception {
-        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "http://localhost:3001");
+        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "https://user-retention-smashup.ngrok-free.dev");
         String content = frontendUrl + "/verify?token=" + token;
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
