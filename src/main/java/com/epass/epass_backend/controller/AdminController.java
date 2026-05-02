@@ -7,17 +7,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://192.168.1.170:3001"})
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    // Get all permit requests
     @GetMapping("/requests")
     public ResponseEntity<?> getAllRequests() {
         try {
@@ -27,7 +25,6 @@ public class AdminController {
         }
     }
 
-    // Get pending requests only
     @GetMapping("/requests/pending")
     public ResponseEntity<?> getPendingRequests() {
         try {
@@ -37,7 +34,6 @@ public class AdminController {
         }
     }
 
-    // Approve request
     @PutMapping("/requests/{id}/approve")
     public ResponseEntity<?> approveRequest(@PathVariable Long id) {
         try {
@@ -47,7 +43,6 @@ public class AdminController {
         }
     }
 
-    // Reject request
     @PutMapping("/requests/{id}/reject")
     public ResponseEntity<?> rejectRequest(@PathVariable Long id) {
         try {
@@ -56,19 +51,4 @@ public class AdminController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
-
-    // Verify QR code (for officers)
-    @GetMapping("/verify/{token}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'OFFICER')")
-    public ResponseEntity<?> verifyQRCode(@PathVariable String token) {
-        try {
-            java.util.Map<String, Object> result = adminService.verifyQRCode(token);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "status", "INVALID",
-                    "message", "QR Code not recognized"
-            ));
-        }
-    }
-    }
+}

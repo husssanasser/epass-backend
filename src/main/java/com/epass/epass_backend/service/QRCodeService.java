@@ -18,8 +18,8 @@ public class QRCodeService {
     }
 
     public String generateQRCodeImage(String token) throws Exception {
-        // QR Code يحتوي على رابط كامل
-        String content = "http://localhost:3001/verify?token=" + token;
+        String frontendUrl = System.getenv().getOrDefault("FRONTEND_URL", "http://localhost:3001");
+        String content = frontendUrl + "/verify?token=" + token;
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(

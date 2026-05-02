@@ -11,4 +11,11 @@ public class PermitRequestDTO {
     private LocalDate endDate;
     private String destination;
     private String documentUrl;
+
+    // حقول جديدة
+    private String requestTime;      // وقت الطلب (HH:mm)
+    private Integer durationHours;   // مدة الطلب بالساعات
+    private String caseType;         // للصحة: موعد / طارئ
+    private String institutionName;  // للتعليم: اسم الجهة
+    private String reason;           // سبب مختصر
 }

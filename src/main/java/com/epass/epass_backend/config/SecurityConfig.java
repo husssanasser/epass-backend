@@ -38,18 +38,15 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints - no login required
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/verify/**").permitAll()
                         .requestMatchers("/api/admin/verify/**").permitAll()
-                        // User endpoints
+                        .requestMatchers("/api/upload").permitAll()
+                        .requestMatchers("/api/files/**").permitAll()
                         .requestMatchers("/api/permits/**").hasAnyRole("USER", "ADMIN")
-                        // Admin endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        // Officer endpoints
-                        .requestMatchers("/api/officer/**").hasRole("OFFICER")
-                        // Chatbot
                         .requestMatchers("/api/chatbot/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/officer/**").hasRole("OFFICER")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter,
@@ -72,7 +69,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:3001",
+                "http://192.168.1.170:3001",
+                "https://epass-frontend.vercel.app"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
