@@ -59,8 +59,10 @@ public class PermitService {
             notification.setUser(user);
             notification.setMessage("✅ Your " + dto.getPermitType() + " request has been automatically APPROVED!");
             notificationRepository.save(notification);
-            try { emailService.sendApprovalEmail(user.getEmail(), user.getFullName()); }
-            catch (Exception e) { System.out.println("Email not sent: " + e.getMessage()); }
+            new Thread(() -> {
+                try { emailService.sendApprovalEmail(user.getEmail(), user.getFullName()); }
+                catch (Exception e) { System.out.println("Email not sent: " + e.getMessage()); }
+            }).start();
         }
 
         if (status == PermitRequest.Status.PENDING) {
